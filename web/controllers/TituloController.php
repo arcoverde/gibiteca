@@ -138,8 +138,15 @@ class TituloController extends Controller
         ]);
     }
 
-    public function actionTagsLink($id)
+    public function actionTagsLink($id_titulo, $id_tag)
     {
+        $titulo = $this->findModel($id_titulo);
+        $tag = Tag::findOne($id_tag);
+        $titulo->link('tags', $tag);
+
+        //Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return \yii\helpers\Json::encode($tag);
+        /*
         $model = new DynamicModel(['id_tag']);
         $model->addRule('id_tag', 'required');
         $model->addRule('id_tag', 'integer');
@@ -157,7 +164,7 @@ class TituloController extends Controller
             return $this->renderAjax('tags_link', [
                 'model' => $model,
             ]);
-        }
+        }*/
     }
 
     public function actionTagsUnlink($id_titulo, $id_tag)

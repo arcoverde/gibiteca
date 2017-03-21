@@ -14,15 +14,15 @@ $this->params['breadcrumbs'][] = 'Tags';
 ?>
 <div class="tag-index">
 
-    <?php yii\widgets\Pjax::begin(['id' => 'tag-index-grid-pjax']) ?>
     <?= GridView::widget([
+        'id' => 'tags-grid',
         'dataProvider' => $model,
         #'filterModel' => $searchModel,
         'export' => false,
         'hover' => true,
         'condensed' => true,
         'columns' => [
-            ['class' => 'kartik\grid\SerialColumn'],
+            #['class' => 'kartik\grid\SerialColumn'],
 
             'nome',
 
@@ -39,10 +39,20 @@ $this->params['breadcrumbs'][] = 'Tags';
             ],
         ],
     ]); ?>
-    <?php yii\widgets\Pjax::end(); ?>
 
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form>
+                <?=Html::dropDownList('tags_select', null, app\models\Tag::getDataList(), ['id'=>'tags_select', 'class'=>'form-controll'])?>
+                <button type="button" class="btn btn-success btn-xs linkTag">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+    
     <p>
-        <?= Html::a('Adicionar', ['create'], ['class' => 'btn btn-success linkTag']) ?>
+        <button class="btn btn-default" data-dismiss="modal">Fechar</button>
     </p>
     
 </div>
@@ -53,11 +63,16 @@ $this->registerJs("$('.linkTag').on('click', function(event) {
         $.ajax({
             type: 'GET',
             url: '" . yii\helpers\Url::to(['titulo/tags-link']) . "',
-            data: {id: ".$titulo->id_titulo."},
+            data: {
+                id_titulo: ".$titulo->id_titulo.",
+                id_tag: $('#tags_select').val(),
+            },
+            dataType: 'json',
             success: function(data)
             {
-                $('#link_tag_modal_window_body').html(data);
-                $('#link_tag_modal_window').modal();
+                var tabela = $('#tags-grid table tbody');
+                var numero = ((tabela.find('tr').size())%2 === 0)?'odd':'even';
+                tabela.append('<tr class=\"'+numero+'\"> <td>'+data.nome+'</td><td class=\"kv-align-center kv-align-middle\"><a href=\"\" class=\"unlinkTag\" id=\"'+data.id+'\" title=\"Excluir\"><span class=\"glyphicon glyphicon-trash\"></span></a></td></tr>');
             }
         });
 });");
@@ -66,6 +81,7 @@ Dialog::widget();
 $this->registerJs("$('.unlinkTag').on('click', function(event) {
         event.preventDefault();
         var id = $(this).attr('id');
+        var _tr = $(this).closest('tr');
         krajeeDialog.confirm('Tem certeza que deseja excluir este item?', function (result) {
             if (result) {
                 $.ajax({
@@ -75,9 +91,12 @@ $this->registerJs("$('.unlinkTag').on('click', function(event) {
                         id_titulo: ".$titulo->id_titulo.",
                         id_tag: id,
                     },
+                    dataType: 'json',
                     success: function(data)
                     {
-                        $.pjax.reload({container:'#tag-index-grid-pjax'});
+                        _tr.find('td').fadeOut(1000,function(){ 
+                            _tr.remove();                    
+                        }); 
                     }
                 });
             }

@@ -12,8 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="titulo-index">
 
-    <?php yii\widgets\Pjax::begin(['id' => 'titulo-grid-pjax']) ?>
     <?= GridView::widget([
+        'id' => 'titulos-grid',
+        'pjax' => true,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'export' => false,
@@ -101,7 +102,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-    <?php yii\widgets\Pjax::end(); ?>
 
     <p>
         <?= Html::a('Adicionar', ['create'], ['class' => 'btn btn-success createData']) ?>
@@ -123,6 +123,38 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?php
+$this->registerJs("$('#modal_window').on('hidden.bs.modal', function(event) {
+    location.reload();
+});");
+
+$this->registerJs("$('.createData').on('click', function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'GET',
+            url: '" . yii\helpers\Url::to(['titulo/create']) . "',
+            success: function(data)
+            {
+                $('#modal_window_body').html(data);
+                $('#modal_window').modal();
+            }
+        });
+});");
+
+$this->registerJs("$('.updateData').on('click', function(event) {
+        event.preventDefault();
+        var id = $(this).attr('id');
+        $.ajax({
+            type: 'GET',
+            url: '" . yii\helpers\Url::to(['titulo/update']) . "',
+            data: {id: id},
+            success: function(data)
+            {
+                $('#modal_window_body').html(data);
+                $('#modal_window').modal();
+            }
+        });
+});");
+
 $this->registerJs("$('.tagIndex').on('click', function(event) {
         event.preventDefault();
         var id = $(this).attr('id');

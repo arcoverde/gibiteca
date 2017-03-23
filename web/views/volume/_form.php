@@ -31,7 +31,7 @@ use kartik\widgets\FileInput;
         <?= $form->field($model, 'avaliacao')->dropDownList([1 => '*', 2 => '* *', 3 => '* * *', 4 => '* * * *', 5 => '* * * * *'], ['prompt' => 'Selecione']) ?>
     </div>
     <div class="col-md-2">
-        <?= $form->field($model, 'foi_lido')->textInput() ?>
+        <?= $form->field($model, 'foi_lido')->dropDownList([0 => 'Não', 1 => 'Sim']) ?>
     </div>
     <div class="col-md-12">
         <?= $form->field($model, 'observacao')->textInput(['maxlength' => true]) ?>
@@ -53,13 +53,15 @@ use kartik\widgets\FileInput;
                 ],
             ]); ?>
     </div>
-    <div class="col-md-3">
-        <?= Html::img("@web/upload/capas/{$model->id_volume}.jpg", ['width' => '100', 'height' => '150']) ?>
-    </div>
+    <?php if (file_exists(Yii::getAlias("@app/upload/capas/{$model->id_volume}.jpg"))): ?>
+        <div class="col-md-3">
+            <?= Html::img("@web/upload/capas/{$model->id_volume}.jpg", ['width' => '100', 'height' => '150']) ?>
+        </div>
+    <?php endif; ?>
 
-    <div class="col-md-2">
+    <div class="col-md-12">
         <div class="form-group">
-            <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Gravar', ['class' => 'btn btn-success']) ?>
         </div>
     </div>
 

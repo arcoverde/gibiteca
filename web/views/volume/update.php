@@ -5,10 +5,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Volume */
 
-$this->title = 'Update Volume: ' . $model->id_volume;
-$this->params['breadcrumbs'][] = ['label' => 'Volumes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_volume, 'url' => ['view', 'id' => $model->id_volume]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = ['label' => 'Títulos', 'url' => yii\helpers\Url::to(['titulo/index'])];
+$this->params['breadcrumbs'][] = $model->titulo->nome_titulo;
+$this->params['breadcrumbs'][] = ['label' => 'Volumes', 'url' => ['index', 'id_titulo' => $model->id_titulo]];
+$this->params['breadcrumbs'][] = 'Nº ' . $model->numero . sprintf(' (%02d/%04d)', $model->data_mes, $model->data_ano);
+$this->params['breadcrumbs'][] = 'Alterar';
 ?>
 <div class="volume-update">
 

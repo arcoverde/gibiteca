@@ -52,12 +52,12 @@ class Volume extends \yii\db\ActiveRecord
         return [
             'id_volume' => 'Id Volume',
             'id_titulo' => 'Id Titulo',
-            'numero' => 'Numero',
-            'data_mes' => 'Data Mes',
-            'data_ano' => 'Data Ano',
-            'avaliacao' => 'Avaliacao',
-            'foi_lido' => 'Foi Lido',
-            'observacao' => 'Observacao',
+            'numero' => 'Número',
+            'data_mes' => 'Mês',
+            'data_ano' => 'Ano',
+            'avaliacao' => 'Avaliação',
+            'foi_lido' => 'Lido',
+            'observacao' => 'Observação',
         ];
     }
 

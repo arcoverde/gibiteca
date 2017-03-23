@@ -132,49 +132,28 @@ class TituloController extends Controller
             ->joinWith('titulos')
             ->where(['titulo_has_tag.id_titulo' => $id]);
 
-        return $this->renderAjax('tags_index', [
+        return $this->renderAjax('link_index', [
             'model' => new ActiveDataProvider(['query' => $model]),
             'titulo' => $this->findModel($id),
+            'data_list' => Tag::getDataList(),
+            'action_prefix' => 'tags',
         ]);
     }
 
-    public function actionTagsLink($id_titulo, $id_tag)
+    public function actionTagsLink($id_titulo, $id_link)
     {
         $titulo = $this->findModel($id_titulo);
-        $tag = Tag::findOne($id_tag);
+        $tag = Tag::findOne($id_link);
         $titulo->link('tags', $tag);
-
-        //Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return \yii\helpers\Json::encode($tag);
-        /*
-        $model = new DynamicModel(['id_tag']);
-        $model->addRule('id_tag', 'required');
-        $model->addRule('id_tag', 'integer');
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $titulo = $this->findModel($id);
-            $tag = Tag::findOne($model->id_tag);
-            $titulo->link('tags', $tag);
-            
-            return $this->redirect(['tags', 'id' => $id]);
-            #Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            #return ['success' => true];
-        }
-        else {
-            return $this->renderAjax('tags_link', [
-                'model' => $model,
-            ]);
-        }*/
     }
 
-    public function actionTagsUnlink($id_titulo, $id_tag)
+    public function actionTagsUnlink($id_titulo, $id_link)
     {
         $titulo = $this->findModel($id_titulo);
-        $tag = Tag::findOne($id_tag);
+        $tag = Tag::findOne($id_link);
         $titulo->unlink('tags', $tag, true);
-        #return $this->redirect(['tags', 'id' => $id_titulo]);
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        return ['success' => true];
+        return \yii\helpers\Json::encode(['success' => true]);    
     }
 
     public function actionGeneros($id)
@@ -183,29 +162,28 @@ class TituloController extends Controller
             ->joinWith('titulos')
             ->where(['titulo_has_genero.id_titulo' => $id]);
 
-        return $this->render('generos_index', [
+        return $this->renderAjax('link_index', [
             'model' => new ActiveDataProvider(['query' => $model]),
             'titulo' => $this->findModel($id),
+            'data_list' => Genero::getDataList(),
+            'action_prefix' => 'generos',
         ]);
     }
 
-    public function actionGenerosLink($id)
+    public function actionGenerosLink($id_titulo, $id_link)
     {
-        $model = new DynamicModel(['id_genero']);
-        $model->addRule(['id_genero'], 'integer');
-        $model->addRule(['id_genero'], 'required');
+        $titulo = $this->findModel($id_titulo);
+        $genero = Genero::findOne($id_link);
+        $titulo->link('generos', $genero);
+        return \yii\helpers\Json::encode($genero);
+    }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $titulo = $this->findModel($id);
-            $genero = Genero::findOne($model->id_genero);
-            $titulo->link('generos', $genero);
-
-            return $this->redirect(['generos', 'id' => $id]);
-        } else {
-            return $this->render('generos_link', [
-                'model' => $model,
-            ]);
-        }
+    public function actionGenerosUnlink($id_titulo, $id_link)
+    {
+        $titulo = $this->findModel($id_titulo);
+        $genero = Genero::findOne($id_link);
+        $titulo->unlink('generos', $genero, true);
+        return \yii\helpers\Json::encode(['success' => true]);
     }
 
     public function actionEditoras($id)
@@ -214,29 +192,28 @@ class TituloController extends Controller
             ->joinWith('titulos')
             ->where(['titulo_has_editora.id_titulo' => $id]);
 
-        return $this->render('editoras_index', [
+        return $this->renderAjax('link_index', [
             'model' => new ActiveDataProvider(['query' => $model]),
             'titulo' => $this->findModel($id),
+            'data_list' => Editora::getDataList(),
+            'action_prefix' => 'editoras',
         ]);
     }
 
-    public function actionEditorasLink($id)
+    public function actionEditorasLink($id_titulo, $id_link)
     {
-        $model = new DynamicModel(['id_editora']);
-        $model->addRule(['id_editora'], 'integer');
-        $model->addRule(['id_editora'], 'required');
+        $titulo = $this->findModel($id_titulo);
+        $editora = Editora::findOne($id_link);
+        $titulo->link('editoras', $editora);
+        return \yii\helpers\Json::encode($editora);
+    }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $titulo = $this->findModel($id);
-            $editora = Editora::findOne($model->id_editora);
-            $titulo->link('editoras', $editora);
-
-            return $this->redirect(['editoras', 'id' => $id]);
-        } else {
-            return $this->render('editoras_link', [
-                'model' => $model,
-            ]);
-        }
+    public function actionEditorasUnlink($id_titulo, $id_link)
+    {
+        $titulo = $this->findModel($id_titulo);
+        $editora = Editora::findOne($id_link);
+        $titulo->unlink('editoras', $editora, true);
+        return \yii\helpers\Json::encode(['success' => true]);
     }
 
     /**

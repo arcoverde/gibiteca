@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'id' => 'titulos-grid',
-        'pjax' => true,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'export' => false,
@@ -84,14 +83,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         return '<a href="" class="tagIndex" id="' . $model->id_titulo . '" title="Tags"><span class="glyphicon glyphicon-tags"></span></a>';
                     },
                     'genero' => function($url, $model, $key) {
-                        return Html::a(
-                                '<span class="glyphicon glyphicon-book" title="Gêneros"></span>', 
-                                [yii\helpers\Url::to('generos'), 'id' => $key]);
+                        return '<a href="" class="generoIndex" id="' . $model->id_titulo . '" title="Gêneros"><span class="glyphicon glyphicon-book"></span></a>';
                     },
                     'editora' => function($url, $model, $key) {
-                        return Html::a(
-                                '<span class="glyphicon glyphicon-briefcase" title="Editoras"></span>', 
-                                [yii\helpers\Url::to('editoras'), 'id' => $key]);
+                        return '<a href="" class="editoraIndex" id="' . $model->id_titulo . '" title="Editoras"><span class="glyphicon glyphicon-briefcase"></span></a>';
                     },
                     'volumes' => function($url, $model, $key) {
                         return Html::a(
@@ -112,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span><strong><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> <em>Tags</em></strong></span>
+                    <span><strong><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> <em><span id="modal_titulo"></span></em></strong></span>
                 </div>        
                 <div class="modal-body" id="modal_window_body">
                 </div>
@@ -134,6 +129,7 @@ $this->registerJs("$('.createData').on('click', function(event) {
             url: '" . yii\helpers\Url::to(['titulo/create']) . "',
             success: function(data)
             {
+                $('#modal_titulo').html('Título');
                 $('#modal_window_body').html(data);
                 $('#modal_window').modal();
             }
@@ -149,6 +145,7 @@ $this->registerJs("$('.updateData').on('click', function(event) {
             data: {id: id},
             success: function(data)
             {
+                $('#modal_titulo').html('Título');
                 $('#modal_window_body').html(data);
                 $('#modal_window').modal();
             }
@@ -164,9 +161,43 @@ $this->registerJs("$('.tagIndex').on('click', function(event) {
             data: {id: id},
             success: function(data)
             {
+                $('#modal_titulo').html('Tags');
                 $('#modal_window_body').html(data);
                 $('#modal_window').modal();
             }
         });
 });");
+
+$this->registerJs("$('.generoIndex').on('click', function(event) {
+        event.preventDefault();
+        var id = $(this).attr('id');
+        $.ajax({
+            type: 'GET',
+            url: '" . yii\helpers\Url::to(['titulo/generos']) . "',
+            data: {id: id},
+            success: function(data)
+            {
+                $('#modal_titulo').html('Gênero');
+                $('#modal_window_body').html(data);
+                $('#modal_window').modal();
+            }
+        });
+});");
+
+$this->registerJs("$('.editoraIndex').on('click', function(event) {
+        event.preventDefault();
+        var id = $(this).attr('id');
+        $.ajax({
+            type: 'GET',
+            url: '" . yii\helpers\Url::to(['titulo/editoras']) . "',
+            data: {id: id},
+            success: function(data)
+            {
+                $('#modal_titulo').html('Editoras');
+                $('#modal_window_body').html(data);
+                $('#modal_window').modal();
+            }
+        });
+});");
+
 ?>

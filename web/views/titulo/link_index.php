@@ -5,17 +5,12 @@ use kartik\grid\GridView;
 use kartik\dialog\Dialog;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\TagSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->params['breadcrumbs'][] = ['label' => 'Títulos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $titulo->nome_titulo;
-$this->params['breadcrumbs'][] = 'Tags';
 ?>
-<div class="tag-index">
+<div class="link-table-index">
 
     <?= GridView::widget([
-        'id' => 'tags-grid',
+        'id' => 'tabela-link-grid',
         'dataProvider' => $model,
         #'filterModel' => $searchModel,
         'export' => false,
@@ -33,7 +28,7 @@ $this->params['breadcrumbs'][] = 'Tags';
                 'template' => '{delete}',
                 'buttons' => [
                     'delete' => function($url, $model, $key) use ($titulo) {
-                        return '<a href="" class="unlinkTag" id="' . $key . '" title="Excluir"><span class="glyphicon glyphicon-trash"></span></a>';
+                        return '<a href="" class="unlinkData" id="' . $key . '" title="Excluir"><span class="glyphicon glyphicon-trash"></span></a>';
                     },
                 ],
             ],
@@ -43,8 +38,8 @@ $this->params['breadcrumbs'][] = 'Tags';
     <div class="panel panel-default">
         <div class="panel-body">
             <form>
-                <?=Html::dropDownList('tags_select', null, app\models\Tag::getDataList(), ['id'=>'tags_select', 'class'=>'form-controll'])?>
-                <button type="button" class="btn btn-success btn-xs linkTag">
+                <?=Html::dropDownList('data_select', null, $data_list, ['id'=>'data_select', 'class'=>'form-controll'])?>
+                <button type="button" class="btn btn-success btn-xs linkData">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
             </form>
@@ -58,27 +53,33 @@ $this->params['breadcrumbs'][] = 'Tags';
 </div>
 
 <?php
-$this->registerJs("$('.linkTag').on('click', function(event) {
+$this->registerJs("$('.linkData').on('click', function(event) {
         event.preventDefault();
+        if (~$('#tabela-link-grid table tbody tr:first td:first').html().indexOf('Nenhum resultado')) {
+            $('#tabela-link-grid table tbody tr:first').fadeOut(1000,function(){ 
+                $('#tabela-link-grid table tbody tr:first').remove();
+            });
+        }
+        
         $.ajax({
             type: 'GET',
-            url: '" . yii\helpers\Url::to(['titulo/tags-link']) . "',
+            url: '" . yii\helpers\Url::to(["titulo/{$action_prefix}-link"]) . "',
             data: {
                 id_titulo: ".$titulo->id_titulo.",
-                id_tag: $('#tags_select').val(),
+                id_link: $('#data_select').val(),
             },
             dataType: 'json',
             success: function(data)
             {
-                var tabela = $('#tags-grid table tbody');
+                var tabela = $('#tabela-link-grid table tbody');
                 var numero = ((tabela.find('tr').size())%2 === 0)?'odd':'even';
-                tabela.append('<tr class=\"'+numero+'\"> <td>'+data.nome+'</td><td class=\"kv-align-center kv-align-middle\"><a href=\"\" class=\"unlinkTag\" id=\"'+data.id+'\" title=\"Excluir\"><span class=\"glyphicon glyphicon-trash\"></span></a></td></tr>');
+                tabela.append('<tr class=\"'+numero+'\"> <td>'+data.nome+'</td><td class=\"kv-align-center kv-align-middle\"><a href=\"\" class=\"unlinkData\" id=\"'+data.id+'\" title=\"Excluir\"><span class=\"glyphicon glyphicon-trash\"></span></a></td></tr>');
             }
         });
 });");
 
 Dialog::widget();
-$this->registerJs("$('.unlinkTag').on('click', function(event) {
+$this->registerJs("$('.unlinkData').on('click', function(event) {
         event.preventDefault();
         var id = $(this).attr('id');
         var _tr = $(this).closest('tr');
@@ -86,10 +87,10 @@ $this->registerJs("$('.unlinkTag').on('click', function(event) {
             if (result) {
                 $.ajax({
                     type: 'GET',
-                    url: '" . yii\helpers\Url::to(['titulo/tags-unlink']) . "',
+                    url: '" . yii\helpers\Url::to(["titulo/{$action_prefix}-unlink"]) . "',
                     data: {
                         id_titulo: ".$titulo->id_titulo.",
-                        id_tag: id,
+                        id_link: id,
                     },
                     dataType: 'json',
                     success: function(data)
@@ -97,6 +98,14 @@ $this->registerJs("$('.unlinkTag').on('click', function(event) {
                         _tr.find('td').fadeOut(1000,function(){ 
                             _tr.remove();                    
                         }); 
+
+                        console.log($('#tabela-link-grid table tbody').find('tr').size());
+                        
+                        if ($('#tabela-link-grid table tbody').find('tr').size() == 1) {
+                            var tabela = $('#tabela-link-grid table tbody');
+                            var numero = ((tabela.find('tr').size())%2 === 0)?'odd':'even';
+                            tabela.append('<tr class=\"'+numero+'\"> <td colspan=\"2\">Nenhum resultado foi encontrado.</td></tr>');
+                        }
                     }
                 });
             }

@@ -36,6 +36,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'vAlign' => GridView::ALIGN_MIDDLE,
             ],
             [
+                'label' => '#',
+                'attribute' => 'qtdVolumes',
+                'hAlign' => GridView::ALIGN_CENTER,
+                'vAlign' => GridView::ALIGN_MIDDLE,
+            ],
+            [
+                'label' => 'Período',
+                'attribute' => 'periodo',
+                'hAlign' => GridView::ALIGN_CENTER,
+                'vAlign' => GridView::ALIGN_MIDDLE,
+            ],
+            [
                 'label' => 'Tags',
                 'value' => function($model, $index, $widget) {
                     $tags = '';
@@ -45,6 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $tags;
                 },
                 'format' => 'html',
+                'hAlign' => GridView::ALIGN_CENTER,
                 'vAlign' => GridView::ALIGN_MIDDLE,
             ],
             [
@@ -57,6 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $generos;
                 },
                 'format' => 'html',
+                'hAlign' => GridView::ALIGN_CENTER,
                 'vAlign' => GridView::ALIGN_MIDDLE,
             ],
             [
@@ -69,6 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $editoras;
                 },
                 'format' => 'html',
+                'hAlign' => GridView::ALIGN_CENTER,
                 'vAlign' => GridView::ALIGN_MIDDLE,
             ],
 
@@ -195,7 +210,7 @@ $this->registerJs("$('.editoraIndex').on('click', function(event) {
             {
                 $('#modal_titulo').html('Editoras');
                 $('#modal_window_body').html(data);
-                $('#modal_window').modal();
+                $('#modal_window').modal({keyboard: false});
             }
         });
 });");

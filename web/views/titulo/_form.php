@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="titulo-form">
 
-	<?php yii\widgets\Pjax::begin(['id' => 'modal-form-titulo']) ?>
+    <?php yii\widgets\Pjax::begin(['id' => 'modal-form-titulo']) ?>
     <?php $form = ActiveForm::begin([
 			'id' => 'titulo-form',
 			'enableClientValidation' => false,

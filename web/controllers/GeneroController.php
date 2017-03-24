@@ -46,7 +46,7 @@ class GeneroController extends Controller
 
     /**
      * Creates a new Genero model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
@@ -71,7 +71,7 @@ class GeneroController extends Controller
 
     /**
      * Updates an existing Genero model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * If update is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
      */

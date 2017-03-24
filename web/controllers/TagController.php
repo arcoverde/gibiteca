@@ -46,7 +46,7 @@ class TagController extends Controller
 
     /**
      * Creates a new Tag model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
@@ -70,7 +70,7 @@ class TagController extends Controller
 
     /**
      * Updates an existing Tag model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * If update is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
      */

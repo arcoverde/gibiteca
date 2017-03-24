@@ -1,6 +1,6 @@
 <?php
 
-if (!YII_ENV_DEV) {
+if (YII_ENV_DEV) {
     $dns = 'mysql:host=127.0.0.1;dbname=gibiteca';
     $username = 'root';
     $password = '';

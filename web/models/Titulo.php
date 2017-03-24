@@ -118,7 +118,7 @@ class Titulo extends \yii\db\ActiveRecord
      */
     public function getVolumes()
     {
-        return $this->hasMany(Volume::className(), ['id_titulo' => 'id_titulo']);
+        return $this->hasMany(Volume::className(), ['id_titulo' => 'id_titulo'])->orderBy('numero DESC');
     }
     
     public function getQtdVolumes()

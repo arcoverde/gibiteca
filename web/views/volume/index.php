@@ -27,7 +27,11 @@ $this->params['breadcrumbs'][] = 'Volumes';
             [
                 'label' => false,
                 'value' => function($model, $index, $widget) {
-                    return '<div class="image-hover">' . \yii\helpers\Html::img("@web/upload/capas/{$model->id_volume}.jpg", ['class' => 'image-mini']) . '</div>';
+                    if (file_exists(Yii::getAlias("@app/upload/capas/{$model->id_volume}.jpg"))) {
+                        return '<div class="image-hover">' . \yii\helpers\Html::img("@web/upload/capas/{$model->id_volume}.jpg", ['class' => 'image-mini']) . '</div>';
+                    } else {
+                        return '<div class="image-hover">' . \yii\helpers\Html::img("@web/images/sem-imagem.jpg", ['class' => 'image-mini']) . '</div>';
+                    }
                 },
                 'format' => 'html',
                 'hAlign' => GridView::ALIGN_CENTER,

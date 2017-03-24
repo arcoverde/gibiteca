@@ -129,8 +129,8 @@ class Titulo extends \yii\db\ActiveRecord
     public function getPeriodo()
     {
         if (count($this->volumes) > 0) {
-            $ano_ini = $this->volumes[0]->data_ano;
-            $ano_fim = $this->volumes[count($this->volumes)-1]->data_ano;
+            $ano_ini = $this->volumes[count($this->volumes)-1]->data_ano;
+            $ano_fim = $this->volumes[0]->data_ano;
             return $ano_ini == $ano_fim ? $ano_ini : $ano_ini . ' - ' . $ano_fim;
         } else {
             return null;

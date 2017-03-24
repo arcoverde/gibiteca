@@ -47,6 +47,9 @@ class VolumeSearch extends Volume
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
 
         $this->load($params);
@@ -69,6 +72,7 @@ class VolumeSearch extends Volume
         ]);
 
         $query->andFilterWhere(['like', 'observacao', $this->observacao]);
+        $query->orderBy('numero DESC');
 
         return $dataProvider;
     }

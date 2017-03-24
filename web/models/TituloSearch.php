@@ -69,6 +69,7 @@ class TituloSearch extends Titulo
         $query->andFilterWhere(['like', 'nome_titulo', $this->nome_titulo])
             ->andFilterWhere(['like', 'nome_subtitulo', $this->nome_subtitulo]);
 
+        $query->orderBy('nome_titulo');
         return $dataProvider;
     }
 }

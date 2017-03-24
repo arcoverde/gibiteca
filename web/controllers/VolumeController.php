@@ -89,7 +89,7 @@ class VolumeController extends Controller
                 $model->foto = UploadedFile::getInstance($model, 'foto');
                 $model->upload();
             }
-            return $this->redirect(['view', 'id' => $model->id_volume]);
+            return $this->redirect(['index', 'id_titulo' => $id_titulo]);
         } else {
             return $this->render('update', [
                 'model' => $model,

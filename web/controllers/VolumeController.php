@@ -65,7 +65,13 @@ class VolumeController extends Controller
                 $model->foto = UploadedFile::getInstance($model, 'foto');
                 $model->upload();
             }
-            return $this->redirect(['index', 'id_titulo' => $id_titulo]);
+            
+            if (isset($_POST['adicionar'])) {
+                Yii::$app->session->setFlash('success', 'Volume adicionado com sucesso.');
+                return $this->redirect(['create', 'id_titulo' => $id_titulo]);
+            } else {
+                return $this->redirect(['index', 'id_titulo' => $id_titulo]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -89,7 +95,7 @@ class VolumeController extends Controller
                 $model->foto = UploadedFile::getInstance($model, 'foto');
                 $model->upload();
             }
-            return $this->redirect(['index', 'id_titulo' => $id_titulo]);
+            return $this->redirect(['index', 'id_titulo' => $model->id_titulo]);
         } else {
             return $this->render('update', [
                 'model' => $model,

@@ -62,9 +62,21 @@ use kartik\widgets\FileInput;
     <div class="col-md-12">
         <div class="form-group">
             <?= Html::submitButton('Gravar', ['class' => 'btn btn-success']) ?>
+            <?php if ($model->isNewRecord): ?>
+                <?= Html::submitButton('Gravar e Adicionar Outro', ['name' => 'adicionar', 'class' => 'btn btn-default']) ?>
+            <?php endif; ?>
         </div>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php if (Yii::$app->session->hasFlash('success')): ?>
+<div class="col-md-12">
+    <div class="alert alert-success alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <?= Yii::$app->session->getFlash('success') ?>
+    </div>
+</div>
+<?php endif; ?>

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\VolumeSearch */
@@ -13,9 +14,12 @@ $this->params['breadcrumbs'][] = 'Volumes';
 ?>
 <div class="volume-index">
 
+    <?php Pjax::begin([
+        'id' => 'volume_index', 
+    ]) ?>
     <?= GridView::widget([
         'id' => 'volumes-grid',
-        'pjax' => true,
+        #'pjax' => true,
         'dataProvider' => $dataProvider,
         #'filterModel' => $searchModel,
         'export' => false,
@@ -97,6 +101,7 @@ $this->params['breadcrumbs'][] = 'Volumes';
             ],
         ],
     ]); ?>
+    <?php Pjax::end(); ?>
     
     <p>
         <?= Html::a('Adicionar', ['create', 'id_titulo' => $titulo->id_titulo], ['class' => 'btn btn-success createData']) ?>
@@ -119,10 +124,11 @@ $this->params['breadcrumbs'][] = 'Volumes';
 
 <?php
 $this->registerJs("$('#modal_window').on('hidden.bs.modal', function(event) {
-    location.reload();
+    $.pjax.reload({container:'#volume_index'});
 });");
 
-$this->registerJs("$('.tagIndex').on('click', function(event) {
+#$this->registerJs("$('.tagIndex').on('click', function(event) {
+$this->registerJs("$(document).on('click', '.tagIndex', function(event) {
         event.preventDefault();
         var id = $(this).attr('id');
         $.ajax({

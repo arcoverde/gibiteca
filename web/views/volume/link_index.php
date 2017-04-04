@@ -10,7 +10,7 @@ use kartik\dialog\Dialog;
 <div class="link-table-index">
 
     <?= GridView::widget([
-        'id' => 'tabela-link-grid',
+        'id' => 'volume-link-grid',
         'dataProvider' => $model,
         #'filterModel' => $searchModel,
         'export' => false,
@@ -55,9 +55,9 @@ use kartik\dialog\Dialog;
 <?php
 $this->registerJs("$('.linkData').on('click', function(event) {
         event.preventDefault();
-        if (~$('#tabela-link-grid table tbody tr:first td:first').html().indexOf('Nenhum resultado')) {
-            $('#tabela-link-grid table tbody tr:first').fadeOut(1000,function(){ 
-                $('#tabela-link-grid table tbody tr:first').remove();
+        if (~$('#volume-link-grid table tbody tr:first td:first').html().indexOf('Nenhum resultado')) {
+            $('#volume-link-grid table tbody tr:first').fadeOut(1000,function(){ 
+                $('#volume-link-grid table tbody tr:first').remove();
             });
         }
         
@@ -71,7 +71,7 @@ $this->registerJs("$('.linkData').on('click', function(event) {
             dataType: 'json',
             success: function(data)
             {
-                var tabela = $('#tabela-link-grid table tbody');
+                var tabela = $('#volume-link-grid table tbody');
                 var numero = ((tabela.find('tr').size())%2 === 0)?'odd':'even';
                 tabela.append('<tr class=\"'+numero+'\"> <td>'+data.nome+'</td><td class=\"kv-align-center kv-align-middle\"><a href=\"\" class=\"unlinkData\" id=\"'+data.id+'\" title=\"Excluir\"><span class=\"glyphicon glyphicon-trash\"></span></a></td></tr>');
             }
@@ -99,10 +99,10 @@ $this->registerJs("$('.unlinkData').on('click', function(event) {
                             _tr.remove();                    
                         }); 
 
-                        console.log($('#tabela-link-grid table tbody').find('tr').size());
+                        console.log($('#volume-link-grid table tbody').find('tr').size());
                         
-                        if ($('#tabela-link-grid table tbody').find('tr').size() == 1) {
-                            var tabela = $('#tabela-link-grid table tbody');
+                        if ($('#volume-link-grid table tbody').find('tr').size() == 1) {
+                            var tabela = $('#volume-link-grid table tbody');
                             var numero = ((tabela.find('tr').size())%2 === 0)?'odd':'even';
                             tabela.append('<tr class=\"'+numero+'\"> <td colspan=\"2\">Nenhum resultado foi encontrado.</td></tr>');
                         }

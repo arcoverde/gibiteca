@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TituloSearch */
@@ -12,6 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="titulo-index">
 
+    <?php Pjax::begin([
+        'id' => 'titulo_index', 
+    ]) ?>
     <?= GridView::widget([
         'id' => 'titulos-grid',
         'dataProvider' => $dataProvider,
@@ -112,6 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
+    <?php Pjax::end(); ?>
 
     <p>
         <?= Html::a('Adicionar', ['create'], ['class' => 'btn btn-success createData']) ?>
@@ -134,7 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 $this->registerJs("$('#modal_window').on('hidden.bs.modal', function(event) {
-    location.reload();
+    $.pjax.reload({container:'#titulo_index'});
 });");
 
 $this->registerJs("$('.createData').on('click', function(event) {

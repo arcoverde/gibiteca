@@ -144,7 +144,7 @@ class VolumeController extends Controller
     {
         $volume = $this->findModel($id_volume);
         $tag = Tag::findOne($id_link);
-        $volume->unlink('tags', $volume, true);
+        $volume->unlink('tags', $tag, true);
         return \yii\helpers\Json::encode(['success' => true]);
     }
    

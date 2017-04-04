@@ -14,6 +14,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use yii\base\DynamicModel;
+use yii\helpers\Url;
 
 /**
  * TituloController implements the CRUD actions for Titulo model.

@@ -13,11 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="titulo-index">
 
-    <?php Pjax::begin([
-        'id' => 'titulo_index', 
-    ]) ?>
     <?= GridView::widget([
-        'id' => 'titulos-grid',
+        'id' => 'titulo-grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'export' => false,
@@ -116,7 +113,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
 
     <p>
         <?= Html::a('Adicionar', ['create'], ['class' => 'btn btn-success createData']) ?>
@@ -139,7 +135,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 $this->registerJs("$('#modal_window').on('hidden.bs.modal', function(event) {
-    $.pjax.reload({container:'#titulo_index'});
+    $.pjax.reload({container:'#titulo-grid-pjax'});
 });");
 
 $this->registerJs("$('.createData').on('click', function(event) {

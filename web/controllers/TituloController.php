@@ -44,6 +44,9 @@ class TituloController extends Controller
         $searchModel = new TituloSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        #guarda a url para voltar quando gravar na tela de alterar
+        Url::remember(Yii::$app->request->url);
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -91,7 +94,8 @@ class TituloController extends Controller
                 return $this->redirect('index');
             } else {
                 Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-                return \yii\widgets\ActiveForm::validate($model);
+                #return \yii\widgets\ActiveForm::validate($model);
+                return $this->redirect(Url::previous());
             }        
         }
         else {

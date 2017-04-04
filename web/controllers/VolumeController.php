@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 
 /**
  * VolumeController implements the CRUD actions for Volume model.
@@ -42,6 +43,9 @@ class VolumeController extends Controller
         $searchModel = new VolumeSearch(['id_titulo' => $id_titulo]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        #guarda a url para voltar quando gravar na tela de alterar
+        Url::remember(Yii::$app->request->url);
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -97,7 +101,8 @@ class VolumeController extends Controller
                 $model->foto = UploadedFile::getInstance($model, 'foto');
                 $model->upload();
             }
-            return $this->redirect(['index', 'id_titulo' => $model->id_titulo]);
+            //return $this->redirect(['index', 'id_titulo' => $model->id_titulo]);
+            return $this->redirect(Url::previous());
         } else {
             return $this->render('update', [
                 'model' => $model,

@@ -120,7 +120,6 @@ $this->params['breadcrumbs'][] = 'Volumes';
 
 <?php
 $this->registerJs("$('#modal_window').on('hidden.bs.modal', function(event) {
-    //$.pjax.reload({container:'#volume_index'});
     $.pjax.reload({container:'#volume-grid-pjax'});
 });");
 

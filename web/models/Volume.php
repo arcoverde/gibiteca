@@ -17,6 +17,8 @@ use Yii;
  * @property string $observacao
  *
  * @property Titulo $titulo
+ * @property VolumeHasTag[] $volumeHasTags
+ * @property Tag[] $tags
  */
 class Volume extends \yii\db\ActiveRecord
 {
@@ -61,6 +63,22 @@ class Volume extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVolumeHasTags()
+    {
+        return $this->hasMany(VolumeHasTag::className(), ['id_volume' => 'id_volume']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTags()
+    {
+        return $this->hasMany(Tag::className(), ['id_tag' => 'id_tag'])->viaTable('volume_has_tag', ['id_volume' => 'id_volume']);
+    }
+    
     /**
      * @return \yii\db\ActiveQuery
      */

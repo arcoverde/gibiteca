@@ -5,11 +5,13 @@ namespace app\controllers;
 use Yii;
 use app\models\Volume;
 use app\models\VolumeSearch;
+use app\models\Tag;
 use app\models\Titulo;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\data\ActiveDataProvider;
 
 /**
  * VolumeController implements the CRUD actions for Volume model.
@@ -116,6 +118,36 @@ class VolumeController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionTags($id)
+    {
+        $model = Tag::find()
+            ->joinWith('volumes')
+            ->where(['volume_has_tag.id_volume' => $id]);
+
+        return $this->renderAjax('link_index', [
+            'model' => new ActiveDataProvider(['query' => $model]),
+            'volume' => $this->findModel($id),
+            'data_list' => Tag::getDataList(),
+            'action_prefix' => 'tags',
+        ]);
+    }
+    
+    public function actionTagsLink($id_volume, $id_link)
+    {
+        $volume = $this->findModel($id_volume);
+        $tag = Tag::findOne($id_link);
+        $volume->link('tags', $tag);
+        return \yii\helpers\Json::encode($tag);
+    }
+
+    public function actionTagsUnlink($id_volume, $id_link)
+    {
+        $volume = $this->findModel($id_volume);
+        $tag = Tag::findOne($id_link);
+        $volume->unlink('tags', $volume, true);
+        return \yii\helpers\Json::encode(['success' => true]);
+    }
+   
     /**
      * Finds the Volume model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

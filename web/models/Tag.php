@@ -12,6 +12,8 @@ use Yii;
  *
  * @property TituloHasTag[] $tituloHasTags
  * @property Titulo[] $titulos
+ * @property VolumeHasTag[] $volumeHasTags
+ * @property Volume[] $volumes
  */
 class Tag extends \yii\db\ActiveRecord
 {
@@ -61,6 +63,22 @@ class Tag extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Titulo::className(), ['id_titulo' => 'id_titulo'])->viaTable('titulo_has_tag', ['id_tag' => 'id_tag']);
     }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVolumeHasTags()
+    {
+        return $this->hasMany(VolumeHasTag::className(), ['id_tag' => 'id_tag']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVolumes()
+    {
+        return $this->hasMany(Volume::className(), ['id_volume' => 'id_volume'])->viaTable('volume_has_tag', ['id_tag' => 'id_tag']);
+    }    
 
     public static function getDataList()
     {

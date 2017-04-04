@@ -69,13 +69,31 @@ $this->params['breadcrumbs'][] = 'Volumes';
                 'vAlign' => GridView::ALIGN_MIDDLE,
             ],
             [
+                'label' => 'Tags',
+                'value' => function($model, $index, $widget) {
+                    $tags = '';
+                    foreach ($model->tags as $tag) {
+                        $tags .= '<span class="label label-default">' . $tag->nome . '</span> ';
+                    }
+                    return $tags;
+                },
+                'format' => 'html',
+                'hAlign' => GridView::ALIGN_CENTER,
+                'vAlign' => GridView::ALIGN_MIDDLE,
+            ],
+            [
                 'attribute' => 'observacao',
                 'vAlign' => GridView::ALIGN_MIDDLE,
             ],
 
             [
                 'class' => '\kartik\grid\ActionColumn',
-                'template' => '{update} {delete}',
+                'template' => '{update} {delete} {tags}',
+                'buttons' => [
+                    'tags' => function($url, $model, $key) {
+                        return '<a href="" class="tagIndex" id="' . $model->id_volume . '" title="Tags"><span class="glyphicon glyphicon-tags"></span></a>';
+                    },
+                ],
             ],
         ],
     ]); ?>
@@ -84,4 +102,39 @@ $this->params['breadcrumbs'][] = 'Volumes';
         <?= Html::a('Adicionar', ['create', 'id_titulo' => $titulo->id_titulo], ['class' => 'btn btn-success createData']) ?>
     </p>
     
+    <!-- Modal para edicao -->
+    <div class="modal fade" id="modal_window" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span><strong><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> <em><span id="modal_titulo"></span></em></strong></span>
+                </div>        
+                <div class="modal-body" id="modal_window_body">
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
+
+<?php
+$this->registerJs("$('#modal_window').on('hidden.bs.modal', function(event) {
+    location.reload();
+});");
+
+$this->registerJs("$('.tagIndex').on('click', function(event) {
+        event.preventDefault();
+        var id = $(this).attr('id');
+        $.ajax({
+            type: 'GET',
+            url: '" . yii\helpers\Url::to(['volume/tags']) . "',
+            data: {id: id},
+            success: function(data)
+            {
+                $('#modal_titulo').html('Tags');
+                $('#modal_window_body').html(data);
+                $('#modal_window').modal();
+            }
+        });
+});");
+?>

@@ -139,7 +139,8 @@ $this->registerJs("$('#modal_window').on('hidden.bs.modal', function(event) {
     $.pjax.reload({container:'#titulo-grid-pjax'});
 });");
 
-$this->registerJs("$('.createData').on('click', function(event) {
+#$this->registerJs("$('.createData').on('click', function(event) {
+$this->registerJs("$(document).on('click', '.createData', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'GET',
@@ -153,7 +154,8 @@ $this->registerJs("$('.createData').on('click', function(event) {
         });
 });");
 
-$this->registerJs("$('.updateData').on('click', function(event) {
+#$this->registerJs("$('.updateData').on('click', function(event) {
+$this->registerJs("$(document).on('click', '.updateData', function(event) {
         event.preventDefault();
         var id = $(this).attr('id');
         $.ajax({
@@ -169,7 +171,8 @@ $this->registerJs("$('.updateData').on('click', function(event) {
         });
 });");
 
-$this->registerJs("$('.tagIndex').on('click', function(event) {
+#$this->registerJs("$('.tagIndex').on('click', function(event) {
+$this->registerJs("$(document).on('click', '.tagIndex', function(event) {
         event.preventDefault();
         var id = $(this).attr('id');
         $.ajax({
@@ -185,7 +188,8 @@ $this->registerJs("$('.tagIndex').on('click', function(event) {
         });
 });");
 
-$this->registerJs("$('.generoIndex').on('click', function(event) {
+#$this->registerJs("$('.generoIndex').on('click', function(event) {
+$this->registerJs("$(document).on('click', '.generoIndex', function(event) {
         event.preventDefault();
         var id = $(this).attr('id');
         $.ajax({
@@ -201,7 +205,8 @@ $this->registerJs("$('.generoIndex').on('click', function(event) {
         });
 });");
 
-$this->registerJs("$('.editoraIndex').on('click', function(event) {
+#$this->registerJs("$('.editoraIndex').on('click', function(event) {
+$this->registerJs("$(document).on('click', '.editoraIndex', function(event) {
         event.preventDefault();
         var id = $(this).attr('id');
         $.ajax({

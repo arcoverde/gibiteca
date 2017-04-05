@@ -122,6 +122,17 @@ class VolumeController extends Controller
 
         return $this->redirect(['index']);
     }
+    
+    public function actionConsultaFaltando()
+    {
+        $model = Volume::find()
+                    ->joinWith('tags')
+                    ->where(['volume_has_tag.id_tag' => 6])
+                    ->all();
+        return $this->render('consulta_faltando', [
+            'model' => $model,
+        ]);
+    }
 
     public function actionTags($id)
     {

@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name . ' - Backend',
+        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -37,6 +37,9 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Consultas', 'items' => [
+                ['label' => 'Volumes Faltando', 'url' => ['/volume/consulta-faltando']],
+            ]],
             ['label' => 'Tabelas', 'items' => [
                 ['label' => 'Categorias', 'url' => ['/categoria/index']],
                 ['label' => 'Editoras', 'url' => ['/editora/index']],

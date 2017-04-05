@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'id' => 'titulo-grid',
+        'pjax' => true,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'export' => false,

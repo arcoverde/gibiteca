@@ -96,7 +96,13 @@ a.desc:after {
     width: 50px; 
     height: 75px;
 }
+
 .image-hover:hover > .image-mini {
+    width: 100px; 
+    height: 150px;
+}
+
+.image-padrao {
     width: 100px; 
     height: 150px;
 }

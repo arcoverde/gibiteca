@@ -12,6 +12,8 @@ use app\models\Volume;
  */
 class VolumeSearch extends Volume
 {
+    public $id_tag;
+    
     /**
      * @inheritdoc
      */
@@ -41,7 +43,8 @@ class VolumeSearch extends Volume
      */
     public function search($params)
     {
-        $query = Volume::find();
+        $query = Volume::find()
+                    ->joinWith('tags');
 
         // add conditions that should always apply here
 
@@ -71,6 +74,7 @@ class VolumeSearch extends Volume
             'foi_lido' => $this->foi_lido,
         ]);
 
+        $query->andFilterWhere(['volume_has_tag.id_tag' => $this->id_tag]);
         $query->andFilterWhere(['like', 'observacao', $this->observacao]);
         $query->orderBy('numero DESC');
 

@@ -134,6 +134,16 @@ class VolumeController extends Controller
         ]);
     }
 
+    public function actionConsultaNaoLido()
+    {
+        $model = Volume::find()
+                    ->where(['foi_lido' => false])
+                    ->all();
+        return $this->render('consulta_nao_lido', [
+            'model' => $model,
+        ]);
+    }
+    
     public function actionTags($id)
     {
         $model = Tag::find()

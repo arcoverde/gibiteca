@@ -39,6 +39,7 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Consultas', 'items' => [
                 ['label' => 'Volumes Faltando', 'url' => ['/volume/consulta-faltando']],
+                ['label' => 'Volumes Não Lidos', 'url' => ['/volume/consulta-nao-lido']],
             ]],
             ['label' => 'Tabelas', 'items' => [
                 ['label' => 'Categorias', 'url' => ['/categoria/index']],

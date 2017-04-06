@@ -137,7 +137,9 @@ class VolumeController extends Controller
     public function actionConsultaNaoLido()
     {
         $model = Volume::find()
+                    ->joinWith('tags')
                     ->where(['foi_lido' => false])
+                    ->andWhere(['<>', 'volume_has_tag.id_tag', 6])
                     ->all();
         return $this->render('consulta_nao_lido', [
             'model' => $model,

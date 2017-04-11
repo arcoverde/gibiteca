@@ -83,6 +83,11 @@ $this->params['breadcrumbs'][] = 'Volumes';
                 'vAlign' => GridView::ALIGN_MIDDLE,
             ],
             [
+                'label' => 'Local',
+                'attribute' => 'local.descricao',
+                'vAlign' => GridView::ALIGN_MIDDLE,
+            ],
+            [
                 'attribute' => 'observacao',
                 'vAlign' => GridView::ALIGN_MIDDLE,
             ],

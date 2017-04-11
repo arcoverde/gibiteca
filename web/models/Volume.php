@@ -9,6 +9,7 @@ use Yii;
  *
  * @property string $id_volume
  * @property string $id_titulo
+ * @property string $id_local
  * @property int $numero
  * @property int $data_mes
  * @property int $data_ano
@@ -16,6 +17,7 @@ use Yii;
  * @property int $foi_lido
  * @property string $observacao
  *
+ * @property Local $local
  * @property Titulo $titulo
  * @property VolumeHasTag[] $volumeHasTags
  * @property Tag[] $tags
@@ -40,7 +42,7 @@ class Volume extends \yii\db\ActiveRecord
         return [
             [['foto'], 'file', 'extensions' => 'jpg'],
             [['id_titulo'], 'required'],
-            [['id_titulo', 'numero', 'data_mes', 'data_ano', 'avaliacao', 'foi_lido'], 'integer'],
+            [['id_titulo', 'id_local', 'numero', 'data_mes', 'data_ano', 'avaliacao', 'foi_lido'], 'integer'],
             [['observacao'], 'string', 'max' => 100],
             [['id_titulo'], 'exist', 'skipOnError' => true, 'targetClass' => Titulo::className(), 'targetAttribute' => ['id_titulo' => 'id_titulo']],
         ];
@@ -54,6 +56,7 @@ class Volume extends \yii\db\ActiveRecord
         return [
             'id_volume' => 'Id Volume',
             'id_titulo' => 'Id Titulo',
+            'id_local' => 'Local',
             'numero' => 'Número',
             'data_mes' => 'Mês',
             'data_ano' => 'Ano',
@@ -63,6 +66,14 @@ class Volume extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLocal()
+    {
+        return $this->hasOne(Local::className(), ['id_local' => 'id_local']);
+    }    
+    
     /**
      * @return \yii\db\ActiveQuery
      */

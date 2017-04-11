@@ -46,6 +46,7 @@ AppAsset::register($this);
                 ['label' => 'Editoras', 'url' => ['/editora/index']],
                 ['label' => 'Gêneros', 'url' => ['/genero/index']],
                 ['label' => 'Tags', 'url' => ['/tag/index']],
+                ['label' => 'Locais', 'url' => ['/local/index']],
                 ['label' => 'Títulos', 'url' => ['/titulo/index']],
             ]],
             Yii::$app->user->isGuest ? (

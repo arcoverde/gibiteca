@@ -5,23 +5,21 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Volume;
+use app\models\Local;
 
 /**
- * VolumeSearch represents the model behind the search form of `app\models\Volume`.
+ * LocalSearch represents the model behind the search form of `app\models\Local`.
  */
-class VolumeSearch extends Volume
+class LocalSearch extends Local
 {
-    public $id_tag;
-    
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id_volume', 'id_titulo', 'id_local', 'numero', 'data_mes', 'data_ano', 'avaliacao', 'foi_lido'], 'integer'],
-            [['observacao'], 'safe'],
+            [['id_local'], 'integer'],
+            [['descricao'], 'safe'],
         ];
     }
 
@@ -43,16 +41,12 @@ class VolumeSearch extends Volume
      */
     public function search($params)
     {
-        $query = Volume::find()
-                    ->joinWith('tags');
+        $query = Local::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
         ]);
 
         $this->load($params);
@@ -65,19 +59,10 @@ class VolumeSearch extends Volume
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_volume' => $this->id_volume,
-            'id_titulo' => $this->id_titulo,
             'id_local' => $this->id_local,
-            'numero' => $this->numero,
-            'data_mes' => $this->data_mes,
-            'data_ano' => $this->data_ano,
-            'avaliacao' => $this->avaliacao,
-            'foi_lido' => $this->foi_lido,
         ]);
 
-        $query->andFilterWhere(['volume_has_tag.id_tag' => $this->id_tag]);
-        $query->andFilterWhere(['like', 'observacao', $this->observacao]);
-        $query->orderBy('numero DESC');
+        $query->andFilterWhere(['like', 'descricao', $this->descricao]);
 
         return $dataProvider;
     }

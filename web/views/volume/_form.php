@@ -17,6 +17,7 @@ use kartik\widgets\FileInput;
         <strong>Título</strong><br>
         <div class="well well-sm"><?=$model->titulo->nome_titulo?></div>
     </div>
+    
     <div class="col-md-2">
         <?= $form->field($model, 'numero')->textInput() ?>
     </div>
@@ -25,7 +26,7 @@ use kartik\widgets\FileInput;
         <?= $form->field($model, 'data_mes')->dropDownList(\app\components\Helper::listMeses(), ['prompt' => 'Selecione']) ?>
     </div>
     <div class="col-md-2">
-    <?= $form->field($model, 'data_ano')->dropDownList(\app\components\Helper::listAnos(1930), ['prompt' => 'Selecione']) ?>
+        <?= $form->field($model, 'data_ano')->dropDownList(\app\components\Helper::listAnos(1930), ['prompt' => 'Selecione']) ?>
     </div>
     <div class="col-md-2">
         <?= $form->field($model, 'avaliacao')->dropDownList([1 => '*', 2 => '* *', 3 => '* * *', 4 => '* * * *', 5 => '* * * * *'], ['prompt' => 'Selecione']) ?>
@@ -33,11 +34,14 @@ use kartik\widgets\FileInput;
     <div class="col-md-2">
         <?= $form->field($model, 'foi_lido')->dropDownList([0 => 'Não', 1 => 'Sim']) ?>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-4">
+        <?= $form->field($model, 'id_local')->dropDownList(app\models\Local::getDataList(), ['prompt' => 'Selecione']) ?>
+    </div>
+    <div class="col-md-6">
         <?= $form->field($model, 'observacao')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-9">
+    <div class="col-md-8">
         <?=
         $form->field($model, 'foto')
             ->widget(FileInput::classname(),
